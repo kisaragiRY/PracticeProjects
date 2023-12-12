@@ -14,6 +14,20 @@ module.exports = {
         }
     },
 
+    find: async(req, res, next) => {
+        try{
+            const result = await db.Employee.findAll({
+                attributes: ['id', 'name', 'gender', 'dept'],
+                where: {
+                    id: req.params.id,
+                }
+            });
+            res.send(result);
+        }catch(err){
+            res.status(500).send(err);
+        }
+    },
+
     create: async(req, res, next) => {
         try{
             const result = await db.Employee.create({

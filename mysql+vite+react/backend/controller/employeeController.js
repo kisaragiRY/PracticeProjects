@@ -17,11 +17,11 @@ module.exports = {
     create: async(req, res, next) => {
         try{
             const result = await db.Employee.create({
-                name: req.body.name,
-                gender: req.body.gender,
-                dept: req.body.dept,
+                name: req.body.formValue.name,
+                gender: req.body.formValue.gender,
+                dept: req.body.formValue.dept 
             });
-            res.send(res);
+            res.send(result);
         }catch(err){
             res.status(500).send(err);
         }

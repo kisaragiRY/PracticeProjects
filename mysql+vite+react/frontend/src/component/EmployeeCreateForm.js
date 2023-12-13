@@ -12,7 +12,7 @@ export function EmployeeCreateForm() {
     }
 
     const handleSubmit = e => {
-        e.preventDefault()
+        // e.preventDefault()
         try {
             axios.post('http://localhost:3000/employee', {formValue})
             .then(res=>{

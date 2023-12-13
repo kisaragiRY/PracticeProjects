@@ -45,9 +45,9 @@ module.exports = {
         try{
             const result = await db.Employee.update(
                 {
-                    name: req.body.name,
-                    gender: req.body.gender,
-                    dept: req.body.dept,
+                    name: req.body.details.name,
+                    gender: req.body.details.gender,
+                    dept: req.body.details.dept,
                 },
                 {
                     where: {
@@ -68,7 +68,7 @@ module.exports = {
                     id: req.params.id,
                 }
             })
-            res.send(result);
+            res.send({result: result});
         }catch(err){
             res.status(500).send(err);
         }

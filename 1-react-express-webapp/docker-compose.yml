@@ -1,0 +1,71 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.2.0
+    environment:
+      - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/conf:/etc/mysql/conf.d
+      - ./db/logs:/var/log/mysql
+      - mysqldata:/var/lib/mysql
+    networks:
+      - backend
+
+  frontend:
+    # image: node:21.4.0
+    build: 
+      context: .
+      dockerfile: ./frontend.Dockerfile
+    working_dir: /app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/app
+    tty: true
+    networks:
+      - backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - backend
+
+  backend:
+    # image: node:21.4.0
+    build: 
+      context: .
+      dockerfile: ./backend.Dockerfile
+    environment:
+      - MYSQL_SERVER=db
+      - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - CHOKIDAR_USEPOLLING=true
+      - TZ=${TZ}
+    tty: true
+
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    networks:
+      - backend
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+
+networks:
+  backend:
+volumes:
+  mysqldata:
+
+      
+

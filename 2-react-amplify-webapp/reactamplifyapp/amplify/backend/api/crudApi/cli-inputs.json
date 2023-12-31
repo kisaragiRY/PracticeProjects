@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "paths": {
+    "/employee": {
+      "name": "/employee",
+      "lambdaFunction": "crudHandler",
+      "permissions": {
+        "setting": "protected",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ],
+        "guest": [
+          "read",
+          "update"
+        ]
+      }
+    }
+  }
+}

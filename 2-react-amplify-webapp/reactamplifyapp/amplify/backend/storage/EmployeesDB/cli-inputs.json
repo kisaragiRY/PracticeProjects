@@ -1,0 +1,12 @@
+{
+  "resourceName": "EmployeesDB",
+  "tableName": "employee",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "number"
+  },
+  "gsi": [],
+  "triggerFunctions": [
+    "EmployeesDBTriggerb2660e05"
+  ]
+}
